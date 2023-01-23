@@ -6,13 +6,82 @@
     android:layout_height="match_parent"
     tools:context=".SearchBooks">
 
-    <Button
-        android:id="@+id/button2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="126dp"
-        android:layout_marginTop="62dp"
-        android:text="Button"
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/idRVBooks"
+        android:layout_width="410dp"
+        android:layout_height="416dp"
+        android:layout_marginTop="19dp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toBottomOf="@+id/editTxtSearch" />
+
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="376dp"
+        android:layout_height="58dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="27dp"
+        android:layout_marginEnd="16dp"
+        android:paddingLeft="10dp"
+        android:contextClickable="false"
+        android:text="Search"
+        android:textSize="35dp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/imgBkmark" />
+
+    <ImageView
+        android:id="@+id/imgBkmark"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="85dp"
+        android:clickable="true"
+        android:alpha="0.5"
+        android:contentDescription="bkmark"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/bookmark" />
+
+    <ImageView
+        android:id="@+id/imgSearch"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_marginStart="85dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="149dp"
+        android:clickable="true"
+        android:contentDescription="search"
+        app:layout_constraintEnd_toStartOf="@+id/imgBkmark"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/search" />
+
+    <EditText
+        android:id="@+id/editTxtSearch"
+        android:layout_width="327dp"
+        android:layout_height="48dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
+        android:background="@drawable/rounded2"
+        android:ems="10"
+        android:hint="Search"
+        android:padding="15dp"
+        android:inputType="textPersonName"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView" />
+
+    <ImageButton
+        android:id="@+id/imgSearch2"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
+        android:layout_marginTop="16dp"
+        android:background="@drawable/rounded1"
+        android:clickable="true"
+        android:contentDescription="search2"
+        app:layout_constraintStart_toEndOf="@+id/editTxtSearch"
+        app:layout_constraintTop_toBottomOf="@+id/textView"
+        app:srcCompat="@drawable/search2" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

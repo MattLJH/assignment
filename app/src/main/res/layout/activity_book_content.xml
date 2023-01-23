@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".BookContent">
+
+    <TextView
+        android:id="@+id/textView2"
+        android:layout_width="203dp"
+        android:layout_height="69dp"
+        android:layout_marginStart="104dp"
+        android:layout_marginTop="47dp"
+        android:text="TextView"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/textView3"
+        android:layout_width="411dp"
+        android:layout_height="603dp"
+        android:layout_marginTop="12dp"
+        android:text="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse lobortis placerat justo at imperdiet. Duis ornare id lacus sed lobortis. In vel vehicula neque, nec pharetra ligula. Praesent at sapien eget elit finibus consequat at vitae purus. Curabitur mollis lacinia ligula non accumsan. Fusce in sapien ut urna malesuada molestie. Proin sollicitudin nunc lectus. Aliquam erat volutpat. Vivamus sagittis arcu ac ornare rutrum. In a massa euismod, dapibus orci nec, imperdiet ligula. Ut vulputate porttitor dapibus. Fusce quis lobortis diam. Etiam rhoncus vitae lectus accumsan volutpat. Sed dolor erat, eleifend quis vestibulum sagittis, lacinia eu libero.  "
+        android:textSize="20dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView2" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
