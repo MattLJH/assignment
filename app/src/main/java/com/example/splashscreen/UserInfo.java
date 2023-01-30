@@ -1,4 +1,4 @@
 package com.example.splashscreen;
 
-public class j {
+public class UserInfo {
 }
