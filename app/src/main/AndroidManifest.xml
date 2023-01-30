@@ -19,6 +19,13 @@
                 android:value="" />
         </activity>
         <activity
+            android:name=".BookDetailOnline"
+            android:exported="false">
+            <meta-data
+                android:name="android.app.lib_name"
+                android:value=""/>
+        </activity>
+        <activity
             android:name=".BookmarkBooks"
             android:exported="false">
             <meta-data
