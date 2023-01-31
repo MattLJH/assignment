@@ -28,11 +28,24 @@ android {
     }
 }
 
+repositories {
+    maven {
+        url 'https://github.com/psiegman/mvn-repo/raw/master/releases'
+    }
+}
+
 dependencies {
 
     implementation 'androidx.appcompat:appcompat:1.5.1'
     implementation 'com.google.android.material:material:1.7.0'
     implementation 'androidx.constraintlayout:constraintlayout:2.1.4'
+//    implementation('nl.siegmann.epublib:epublib-core:4.0') {
+//        exclude group: 'org.slf4j'
+//        exclude group: 'xmlpull'
+//    }
+    implementation 'org.slf4j:slf4j-android:1.7.25'
+    implementation files('libs\\epublib-core-latest.jar')
+    implementation 'com.google.code.gson:gson:2.2.2'
     testImplementation 'junit:junit:4.13.2'
     androidTestImplementation 'androidx.test.ext:junit:1.1.4'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.5.0'

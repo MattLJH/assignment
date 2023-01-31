@@ -19,7 +19,7 @@
         app:srcCompat="@drawable/logo" />
 
     <Button
-        android:id="@+id/ebook"
+        android:id="@+id/ebookList"
         android:layout_width="369dp"
         android:layout_height="74dp"
         android:layout_marginStart="21dp"
@@ -28,6 +28,7 @@
         android:background="@drawable/roundedbutton"
         android:drawableLeft="@drawable/books"
         android:drawablePadding="25dp"
+        android:onClick="onClick"
         android:paddingHorizontal="100dp"
         android:text="Your EBooks"
         app:layout_constraintEnd_toEndOf="parent"
@@ -45,13 +46,14 @@
         android:background="@drawable/roundedbutton"
         android:drawableLeft="@drawable/globe"
         android:drawablePadding="25dp"
+        android:onClick="onClick"
         android:paddingHorizontal="100dp"
         android:text="Online Books"
         android:textAlignment="center"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.517"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/ebook" />
+        app:layout_constraintTop_toBottomOf="@+id/ebookList" />
 
     <Button
         android:id="@+id/settings"
@@ -63,6 +65,7 @@
         android:background="@drawable/roundedbutton2"
         android:drawableLeft="@drawable/gear"
         android:drawablePadding="25dp"
+        android:onClick="onClick"
         android:paddingHorizontal="100dp"
         android:text="Settings"
         android:textAlignment="center"
