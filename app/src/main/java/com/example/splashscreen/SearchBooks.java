@@ -1,10 +1,10 @@
 package com.example.splashscreen;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageButton;
-import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -24,14 +24,13 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 
-public class SearchBooks extends AppCompatActivity {
+public class SearchBooks extends AppCompatActivity implements View.OnClickListener {
 
     // creating variables for our request queue,
     // array list, progressbar, edittext,
     // image button and our recycler view.
     private RequestQueue mRequestQueue;
     private ArrayList<BookInfo> bookInfoArrayList;
-    private ProgressBar progressBar;
     private EditText searchEdt;
     private ImageButton searchBtn;
 
@@ -48,7 +47,6 @@ public class SearchBooks extends AppCompatActivity {
         searchBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                progressBar.setVisibility(View.VISIBLE);
 
                 // checking if our edittext field is empty or not.
                 if (searchEdt.getText().toString().isEmpty()) {
@@ -88,7 +86,6 @@ public class SearchBooks extends AppCompatActivity {
         JsonObjectRequest booksObjrequest = new JsonObjectRequest(Request.Method.GET, url, null, new Response.Listener<JSONObject>() {
             @Override
             public void onResponse(JSONObject response) {
-                progressBar.setVisibility(View.GONE);
                 // inside on response method we are extracting all our json data.
                 try {
                     JSONArray itemsArray = response.getJSONArray("items");
@@ -96,21 +93,14 @@ public class SearchBooks extends AppCompatActivity {
                         JSONObject itemsObj = itemsArray.getJSONObject(i);
                         JSONObject volumeObj = itemsObj.getJSONObject("volumeInfo");
                         String title = volumeObj.optString("title");
-                        JSONArray authorsArray = volumeObj.getJSONArray("authors");
                         String publisher = volumeObj.optString("publisher");
                         String publishedDate = volumeObj.optString("publishedDate");
                         String description = volumeObj.optString("description");
                         JSONObject imageLinks = volumeObj.optJSONObject("imageLinks");
                         String thumbnail = imageLinks.optString("thumbnail");
-                        ArrayList<String> authorsArrayList = new ArrayList<>();
-                        if (authorsArray.length() != 0) {
-                            for (int j = 0; j < authorsArray.length(); j++) {
-                                authorsArrayList.add(authorsArray.optString(i));
-                            }
-                        }
                         // after extracting all the data we are
                         // saving this data in our modal class.
-                        BookInfo bookInfo = new BookInfo(title, authorsArrayList, publisher, publishedDate, description, thumbnail);
+                        BookInfo bookInfo = new BookInfo(title, publisher, publishedDate, description, thumbnail);
 
                         // below line is use to pass our modal
                         // class in our array list.
@@ -146,5 +136,16 @@ public class SearchBooks extends AppCompatActivity {
         // at last we are adding our json object
         // request in our request queue.
         queue.add(booksObjrequest);
+    }
+
+    @Override
+    public void onClick(View v) {
+        Intent x;
+        switch (v.getId()) {
+            case R.id.imgBkmark:
+                x = new Intent (this, BookmarkBooks.class);
+                startActivity(x);
+                break;
+        }
     }
 }

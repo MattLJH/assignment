@@ -3,58 +3,64 @@
     xmlns:tools="http://schemas.android.com/tools"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="wrap_content"
     android:orientation="vertical"
-    app:cardCornerRadius="8dp">
+    app:cardCornerRadius="8dp"
+    android:layout_marginBottom="20dp"
+    android:paddingRight="10dp"
+    android:paddingLeft="10dp">
 
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        tools:ignore="MissingConstraints"
-        android:background="#D3D3D3">
+        android:background="#D3D3D3"
+        tools:ignore="MissingConstraints">
 
         <TextView
             android:id="@+id/idRVBookTitle"
             android:layout_width="200dp"
             android:layout_height="41dp"
-            android:text="Book Title"
-            android:layout_marginLeft="10dp"
-            android:layout_marginTop="10dp"
+            android:layout_marginLeft="15dp"
+            android:layout_marginTop="20dp"
+            android:layout_toEndOf="@id/idRVBookImg"
             android:padding="3dp"
+            android:text="Book Title"
             android:textColor="@color/black"
-            android:textSize="15dp"/>
+            android:textSize="15dp" />
 
         <TextView
             android:id="@+id/idRVAuthor"
             android:layout_width="164dp"
             android:layout_height="27dp"
-            android:text="Publisher"
-            android:layout_marginLeft="10dp"
-            android:layout_marginTop="10dp"
-            android:padding="3dp"
-            android:textColor="@color/black"
             android:layout_below="@id/idRVBookTitle"
-            android:textSize="15dp"/>
+            android:layout_toEndOf="@id/idRVBookImg"
+            android:layout_marginLeft="15dp"
+            android:layout_marginTop="15dp"
+            android:padding="3dp"
+            android:text="Publisher"
+            android:textColor="@color/black"
+            android:textSize="15dp" />
 
         <TextView
             android:id="@+id/idRVDate"
             android:layout_width="156dp"
             android:layout_height="25dp"
-            android:text="Published Date"
-            android:layout_marginLeft="10dp"
+            android:layout_below="@id/idRVAuthor"
+            android:layout_toEndOf="@id/idRVBookImg"
+            android:layout_marginLeft="15dp"
             android:layout_marginTop="30dp"
             android:padding="3dp"
-            android:layout_below="@id/idRVAuthor"
+            android:text="Published Date"
             android:textColor="@color/black"
             android:textSize="15dp" />
 
         <ImageView
-            android:id="@+id/idRVbook"
+            android:id="@+id/idRVBookImg"
             android:layout_width="130dp"
             android:layout_height="160dp"
-            android:layout_marginLeft="25dp"
-            android:layout_toEndOf="@id/idRVBookTitle"
-            tools:layout_editor_absoluteX="227dp"
-            tools:layout_editor_absoluteY="16dp" />
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="20dp"
+            android:layout_marginBottom="20dp"
+            android:contentDescription="Thumbnail" />
     </RelativeLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

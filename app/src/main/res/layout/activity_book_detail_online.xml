@@ -18,7 +18,7 @@
             android:orientation="horizontal">
 
             <LinearLayout
-                android:layout_width="251dp"
+                android:layout_width="230dp"
                 android:layout_height="178dp"
                 android:orientation="vertical">
 
@@ -38,7 +38,8 @@
                 android:id="@+id/idRVbook"
                 android:layout_width="130dp"
                 android:layout_height="160dp"
-                android:layout_margin="18dp" />
+                android:layout_margin="18dp"
+                android:layout_marginEnd="30dp"/>
 
         </LinearLayout>
 
@@ -60,6 +61,14 @@
             android:text="Description"
             android:textColor="@color/black"
             android:textSize="12sp" />
+
+        <Button
+            android:id="@+id/btnBkContent"
+            android:layout_width="314dp"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="45dp"
+            android:onClick="onClick"
+            android:text="Read Book" />
 
     </LinearLayout>
 

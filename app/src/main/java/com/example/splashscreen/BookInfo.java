@@ -5,7 +5,6 @@ import java.util.ArrayList;
 public class BookInfo {
 
     private String title;
-    private ArrayList<String> authors;
     private String publisher;
     private String publishedDate;
     private String description;
@@ -18,14 +17,6 @@ public class BookInfo {
 
     public void setTitle(String title) {
         this.title = title;
-    }
-
-    public ArrayList<String> getAuthors() {
-        return authors;
-    }
-
-    public void setAuthors(ArrayList<String> authors) {
-        this.authors = authors;
     }
 
     public String getPublisher() {
@@ -61,9 +52,8 @@ public class BookInfo {
     }
 
     // creating a constructor class for our BookInfo
-    public BookInfo(String title, ArrayList<String> authors, String publisher, String publishedDate, String description, String thumbnail) {
+    public BookInfo(String title, String publisher, String publishedDate, String description, String thumbnail) {
         this.title = title;
-        this.authors = authors;
         this.publisher = publisher;
         this.publishedDate = publishedDate;
         this.description = description;
