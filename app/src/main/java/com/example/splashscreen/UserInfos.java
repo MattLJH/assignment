@@ -54,8 +54,8 @@ public class UserInfos extends SQLiteOpenHelper {
         values.put(KEY_NAME, users.GetName());
         values.put(KEY_PASS, users.GetPass());
         values.put(KEY_Email, users.GetEmail());
-        Log.d(values.toString(),"the values are");
-        Log.d(KEY_NAME,"the table shown is");
+        Log.d("The values are", values.toString());
+        Log.d("Table is ", TABLE_User);
 
         // Inserting Row
         db.insert(TABLE_User , null, values);
@@ -64,18 +64,14 @@ public class UserInfos extends SQLiteOpenHelper {
     }
 
     // code to get the single contact
-    Users getuser(int id) {
-        SQLiteDatabase db = this.getReadableDatabase();
-
-        Cursor cursor = db.query(TABLE_User, new String[] { KEY_ID,
-                        KEY_NAME,KEY_PASS, KEY_Email }, KEY_ID + "=?",
-                new String[] { String.valueOf(id) }, null, null, null, null);
-        if (cursor != null)
-            cursor.moveToFirst();
-
-        Users user = new Users(Integer.parseInt(cursor.getString(0)),
-                cursor.getString(1), cursor.getString(2), cursor.getString(3));
-        return user;
+    int getUser(String username) {
+        SQLiteDatabase sqLiteDatabase = this.getReadableDatabase();
+        Cursor cursor = sqLiteDatabase.rawQuery("SELECT id FROM UserTable WHERE Name=?", new String[]{username});
+        int id = -1;
+        if (cursor.moveToFirst()) id = cursor.getInt(0);
+        cursor.close();
+        sqLiteDatabase.close();
+        return id;
     }
 
 

@@ -7,6 +7,7 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.speech.RecognizerIntent;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -42,7 +43,11 @@ public class Login extends AppCompatActivity {
                 String UserName = LoginName.getText().toString();
                 String UserPass = LoginPassword.getText().toString();
                 if (UserDb.UserCheck(UserName, UserPass)) {
-                    startActivity(new Intent(Login.this, HomeScreen.class));
+                    Log.d("UserID", String.valueOf(UserDb.getUser(UserName)));
+                    Intent i;
+                    i = new Intent(Login.this, HomeScreen.class);
+                    i.putExtra("Userid", String.valueOf(UserDb.getUser(UserName)));
+                    startActivity(i);
                 } else {
                     Toast.makeText(Login.this, "Login fail", Toast.LENGTH_SHORT).show();
                 }

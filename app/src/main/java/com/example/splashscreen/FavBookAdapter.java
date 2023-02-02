@@ -8,8 +8,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
-import android.widget.ToggleButton;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
@@ -18,14 +16,14 @@ import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 
-public class BookAdapter extends RecyclerView.Adapter<BookAdapter.BookViewHolder> {
+public class FavBookAdapter extends RecyclerView.Adapter<FavBookAdapter.BookViewHolder> {
 
     // creating variables for arraylist and context.
     private ArrayList<BookInfo> bookInfoArrayList;
     private Context mcontext;
 
     // creating constructor for array list and context.
-    public BookAdapter(ArrayList<BookInfo> bookInfoArrayList, Context mcontext) {
+    public FavBookAdapter(ArrayList<BookInfo> bookInfoArrayList, Context mcontext) {
         this.bookInfoArrayList = bookInfoArrayList;
         this.mcontext = mcontext;
     }
@@ -34,7 +32,7 @@ public class BookAdapter extends RecyclerView.Adapter<BookAdapter.BookViewHolder
     @Override
     public BookViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         // inflating our layout for item of recycler view item.
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.book_rv_item, parent, false);
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.book_rv_item_bkmarked, parent, false);
 
         return new BookViewHolder(view);
     }
@@ -50,9 +48,9 @@ public class BookAdapter extends RecyclerView.Adapter<BookAdapter.BookViewHolder
         holder.dateTV.setText(bookInfo.getPublishedDate());
 
         // below line is use to set image from URL in our image view.
+
         Picasso.get().load(bookInfo.getThumbnail().replace("http:", "https:")).into(holder.bookIV);
         Log.d("test", bookInfo.getThumbnail());
-
         // below line is use to add on click listener for our item of recycler view.
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -84,10 +82,8 @@ public class BookAdapter extends RecyclerView.Adapter<BookAdapter.BookViewHolder
     public class BookViewHolder extends RecyclerView.ViewHolder {
         // below line is use to initialize
         // our text view and image views.
-        TextView nameTV, publisherTV, dateTV;
+        TextView nameTV, publisherTV, pageCountTV, dateTV;
         ImageView bookIV;
-        ToggleButton BkmarkTG;
-
 
         public BookViewHolder(View itemView) {
             super(itemView);
@@ -95,19 +91,6 @@ public class BookAdapter extends RecyclerView.Adapter<BookAdapter.BookViewHolder
             publisherTV = itemView.findViewById(R.id.idRVAuthor);
             dateTV = itemView.findViewById(R.id.idRVDate);
             bookIV = itemView.findViewById(R.id.idRVBookImg);
-
-            // Toggle Button
-            BkmarkTG = itemView.findViewById(R.id.btnBookmark);
-            BkmarkTG.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    if(BkmarkTG.isChecked()) {
-                        Log.d("Added", "Success");
-                    } else {
-                        Log.d("Delete", "Deleted");
-                    };
-                }
-            });
         }
     }
 }

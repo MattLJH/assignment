@@ -28,11 +28,10 @@ public class Register extends AppCompatActivity {
                 String name =(editName.getText().toString());
                 String pass = (editPass.getText().toString());
                 String email = (editEmail.getText().toString());
-Users add = new Users(name, pass, email);
-db.AddUser(add);
+                Users add = new Users(name, pass, email);
+                db.AddUser(add);
                 Toast.makeText(Register.this,"Successfully register", Toast.LENGTH_SHORT).show();
-startActivity(new Intent(Register.this,Login.class));
-
+                startActivity(new Intent(Register.this,Login.class));
             }
         });
     }
