@@ -24,6 +24,7 @@ public class EBook extends AppCompatActivity {
     DatabaseHandler db;
     private ArrayList<EBookInfo> ebooks;
     private RecyclerView recyclerView;
+    int userid;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,8 +32,10 @@ public class EBook extends AppCompatActivity {
         setContentView(R.layout.activity_ebook);
 
         db = new DatabaseHandler(this);
+        userid = Integer.parseInt(getIntent().getStringExtra("Userid"));
 
-        ebooks = db.getAllEBooks();
+
+        ebooks = db.getAllEBooks(userid);
         recyclerView = findViewById(R.id.ebookList);
         setAdapter();
 
@@ -61,7 +64,7 @@ public class EBook extends AppCompatActivity {
 
 
                         //EBookInfo ebook = new EBookInfo(uri.toString());
-                        db.addEBook(uri, EBook.this);
+                        db.addEBook(uri, EBook.this, userid);
                         //refresh activity to show newly added books
                         finish();
                         startActivity(getIntent());

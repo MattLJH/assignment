@@ -52,7 +52,9 @@ public class DatabaseHandler extends SQLiteOpenHelper {
                 + KEY_EBOOKURI + " TEXT,"
                 + KEY_EBOOKTITLE + " TEXT,"
                 + KEY_EBOOKAUTHORS + " TEXT,"
-                + KEY_EBOOKTHUMBNAIL + " BLOB"
+                + KEY_EBOOKTHUMBNAIL + " BLOB,"
+                //add userid column
+                + "userid INTEGER"
                 + ")";
         db.execSQL(CREATE_EBOOKS_TABLE);
     }
@@ -68,7 +70,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
     }
 
     //add ebook
-    void addEBook(Uri uri, Context context) {
+    void addEBook(Uri uri, Context context, int userid) {
         SQLiteDatabase db = this.getWritableDatabase();
 
         try{
@@ -97,6 +99,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
             values.put(KEY_EBOOKTITLE, title);
             values.put(KEY_EBOOKAUTHORS, authorsStr);
             values.put(KEY_EBOOKTHUMBNAIL, thumbnailBArray);
+            values.put("userid", userid);
 
             // Inserting Row
             db.insert(TABLE_EBOOKS, null, values);
@@ -108,10 +111,10 @@ public class DatabaseHandler extends SQLiteOpenHelper {
     }
 
     //get all ebooks
-    public ArrayList<EBookInfo> getAllEBooks() {
+    public ArrayList<EBookInfo> getAllEBooks(int userid) {
         ArrayList<EBookInfo> EBookList = new ArrayList<EBookInfo>();
 
-        String selectQuery = "SELECT  * FROM " + TABLE_EBOOKS;
+        String selectQuery = "SELECT  * FROM " + TABLE_EBOOKS + " WHERE userid = " + userid;
 
         SQLiteDatabase db = this.getWritableDatabase();
         Cursor cursor = db.rawQuery(selectQuery, null);
