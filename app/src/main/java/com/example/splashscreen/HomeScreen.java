@@ -36,7 +36,7 @@ public class HomeScreen extends AppCompatActivity implements View.OnClickListene
                 break;
             case R.id.settings:
                 i = new Intent(this, Settings.class);
-                i.putExtra("Userid" User);
+                i.putExtra("Userid", User);
                 startActivity(i);
                 break;
         }
