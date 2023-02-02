@@ -14,7 +14,7 @@ public class Register extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register);
-        UserInfo db = new UserInfo(this);
+        UserInfos db = new UserInfos(this);
         editName = (EditText) findViewById(R.id.NameRegi);
         editPass = (EditText) findViewById(R.id.PassRegi);
         editEmail = (EditText) findViewById(R.id.EmailsRegi);

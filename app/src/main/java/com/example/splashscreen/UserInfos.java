@@ -5,24 +5,20 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.util.Log;
+
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
 
-/**
- * Created by tutlane on 06-01-2018.
- */
-
-public class UserInfo<User> extends SQLiteOpenHelper {
+public class UserInfos extends SQLiteOpenHelper {
     private static final int DATABASE_VERSION = 1;
-    private static final String DATABASE_NAME = "UserManager";
-    private static final String TABLE_Users = "Users";
-    private static final String KEY_ID = "id";
-    private static final String KEY_NAME = "name";
-    private static final String KEY_PASS = "pass";
-    private static final String KEY_Email = "Email";
+    private static final String DATABASE_NAME = "UsersManager";
+    private static final String TABLE_User = "UserTable";
+    private static final String KEY_ID = "Id";
+    private static final String KEY_NAME = "Name";
+    private static final String KEY_PASS = "Password";
+    private static final String KEY_Email = "Emails";
 
-    public UserInfo(Context context) {
+    public UserInfos(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
         //3rd argument to be passed is CursorFactory instance
     }
@@ -30,24 +26,27 @@ public class UserInfo<User> extends SQLiteOpenHelper {
     // Creating Tables
     @Override
     public void onCreate(SQLiteDatabase db) {
-        String CREATE_CONTACTS_TABLE = "CREATE TABLE " + TABLE_Users + "("
-                + KEY_ID + " INTEGER PRIMARY KEY," + KEY_NAME + " TEXT,"+KEY_PASS+ "TEXT"
-                + KEY_Email + " TEXT" + ")";
-        db.execSQL(CREATE_CONTACTS_TABLE);
+        String CREATE_User_Table = "CREATE TABLE " + TABLE_User + "("
+                + KEY_ID + " INTEGER PRIMARY KEY," +
+                KEY_NAME + " TEXT,"+
+                KEY_PASS + " TEXT," +
+                KEY_Email + " TEXT" + ")";
+        db.execSQL(CREATE_User_Table);
+        Log.d(
+                KEY_NAME +" " + KEY_PASS + " "+ KEY_Email,"is created");
     }
 
     // Upgrading database
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
         // Drop older table if existed
-        db.execSQL("DROP TABLE IF EXISTS " + TABLE_Users);
+        db.execSQL("DROP TABLE IF EXISTS " + TABLE_User);
 
         // Create tables again
         onCreate(db);
     }
 
     // code to add the new contact
-
     void AddUser(Users users) {
         SQLiteDatabase db = this.getWritableDatabase();
 
@@ -55,9 +54,11 @@ public class UserInfo<User> extends SQLiteOpenHelper {
         values.put(KEY_NAME, users.GetName());
         values.put(KEY_PASS, users.GetPass());
         values.put(KEY_Email, users.GetEmail());
+        Log.d(values.toString(),"the values are");
+        Log.d(KEY_NAME,"the table shown is");
 
         // Inserting Row
-        db.insert(TABLE_Users, null, values);
+        db.insert(TABLE_User , null, values);
         //2nd argument is String containing nullColumnHack
         db.close(); // Closing database connection
     }
@@ -66,23 +67,23 @@ public class UserInfo<User> extends SQLiteOpenHelper {
     Users getuser(int id) {
         SQLiteDatabase db = this.getReadableDatabase();
 
-        Cursor cursor = db.query(TABLE_Users, new String[] { KEY_ID,
+        Cursor cursor = db.query(TABLE_User, new String[] { KEY_ID,
                         KEY_NAME,KEY_PASS, KEY_Email }, KEY_ID + "=?",
                 new String[] { String.valueOf(id) }, null, null, null, null);
         if (cursor != null)
             cursor.moveToFirst();
 
         Users user = new Users(Integer.parseInt(cursor.getString(0)),
-                cursor.getString(1), cursor.getString(2));
-        // return contact
+                cursor.getString(1), cursor.getString(2), cursor.getString(3));
         return user;
     }
+
 
     // code to get all contacts in a list view
     public ArrayList<Users> collectUser() {
         ArrayList<Users> UserInfo = new ArrayList<Users>();
         // Select All Query
-        String selectQuery = "SELECT  * FROM " + TABLE_Users;
+        String selectQuery = "SELECT  * FROM " + TABLE_User;
 
         SQLiteDatabase db = this.getWritableDatabase();
         Cursor cursor = db.rawQuery(selectQuery, null);
@@ -114,26 +115,37 @@ public class UserInfo<User> extends SQLiteOpenHelper {
         values.put(KEY_Email, users.GetEmail());
 
         // updating row
-        return db.update(TABLE_Users, values, KEY_ID + " = ?",
+        return db.update(TABLE_User, values, KEY_ID + " = ?",
                 new String[] { String.valueOf(users.GetID()) });
     }
 
     // Deleting single contact
     public void deleteContact(Users users) {
         SQLiteDatabase db = this.getWritableDatabase();
-        db.delete(TABLE_Users, KEY_ID + " = ?",
+        db.delete(TABLE_User, KEY_ID + " = ?",
                 new String[] { String.valueOf(users.GetID()) });
         db.close();
     }
 
     // Getting contacts Count
     public int getContactsCount() {
-        String countQuery = "SELECT  * FROM " + TABLE_Users;
+        String countQuery = "SELECT  * FROM " + TABLE_User;
         SQLiteDatabase db = this.getReadableDatabase();
         Cursor cursor = db.rawQuery(countQuery, null);
         cursor.close();
 
         // return count
         return cursor.getCount();
+    }
+    public boolean UserCheck(String UserName, String Password){
+        SQLiteDatabase db = this.getReadableDatabase();
+        String[] Columns = {this.KEY_ID};
+        String Selection = this.KEY_NAME + "= ? AND " + this.KEY_PASS + "= ?";
+        String[] SelectionArgs = {UserName, Password};
+
+        Cursor cursor = db.query(TABLE_User, Columns,Selection,SelectionArgs,null,null,null,null);
+        int count = cursor.getCount();
+        cursor.close();
+        return count >0;
     }
 }

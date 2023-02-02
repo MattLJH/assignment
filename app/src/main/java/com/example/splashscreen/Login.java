@@ -19,7 +19,7 @@ public class Login extends AppCompatActivity {
     private EditText LoginName, LoginPassword;
     private Button LoginButton;
     private TextView RegiButton;
-    private UserInfo UserDb;
+    private UserInfos UserDb;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
@@ -29,7 +29,7 @@ public class Login extends AppCompatActivity {
         LoginPassword = (EditText) findViewById(R.id.LogPass);
         LoginButton = (Button) findViewById(R.id.Logbutton);
         RegiButton = (TextView) findViewById(R.id.RegiClick);
-        UserDb = new UserInfo(this);
+        UserDb = new UserInfos(this);
         RegiButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -39,24 +39,14 @@ public class Login extends AppCompatActivity {
         LoginButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                validateLogin();
+                String UserName = LoginName.getText().toString();
+                String UserPass = LoginPassword.getText().toString();
+                if (UserDb.UserCheck(UserName, UserPass)) {
+                    startActivity(new Intent(Login.this, HomeScreen.class));
+                } else {
+                    Toast.makeText(Login.this, "Login fail", Toast.LENGTH_SHORT).show();
+                }
             }
         });
     }
-private void validateLogin(){
-
-        String UserName = LoginName.getText().toString();
-        String UserPass = LoginPassword.getText().toString();
-    SQLiteDatabase db = UserDb.getReadableDatabase();
-    Cursor cursor = db.rawQuery("select name, pass from Users Where name = ? And Password = ?", new String[]{UserName,UserPass});
-    if (cursor.moveToFirst()){
-        Toast.makeText(Login.this, "Login Successful",Toast.LENGTH_SHORT).show();
-       startActivity(new Intent(Login.this, MainActivity.class));
-    }
-    else
-        Toast.makeText(Login.this, "Login Fail",Toast.LENGTH_SHORT).show();
-    cursor.close();
-    db.close();
-}
-
 }

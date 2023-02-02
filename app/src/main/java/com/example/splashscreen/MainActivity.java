@@ -27,7 +27,7 @@ public class MainActivity extends AppCompatActivity {
 
             @Override
             public void onTransitionCompleted(MotionLayout motionLayout, int currentId) {
-                Intent i = new Intent(getApplicationContext(), HomeScreen.class);
+                Intent i = new Intent(getApplicationContext(), Login.class);
                 startActivity(i);
                 finish();
             }
