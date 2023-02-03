@@ -57,7 +57,7 @@ public class EBookContent extends AppCompatActivity implements View.OnClickListe
                 editor.commit();
             }
             TextView t5 = findViewById(R.id.textView5);
-            t5.setText(id+" "+chapter);
+            t5.setText(book.getTitle()+" - "+"("+chapter+")");
 
 
             /*
