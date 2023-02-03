@@ -11,8 +11,8 @@
         android:layout_width="411dp"
         android:layout_height="439dp"
         android:layout_marginTop="16dp"
-        android:paddingLeft="8dp"
-        android:paddingRight="8dp"
+        android:paddingLeft="17dp"
+        android:paddingRight="17dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/editTxtSearch" />
