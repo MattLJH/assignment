@@ -3,11 +3,13 @@ package com.example.splashscreen;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -19,6 +21,9 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
+import com.example.splashscreen.databinding.ActivityMainBinding;
+import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.google.android.material.navigation.NavigationBarView;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -35,6 +40,7 @@ public class SearchBooks extends AppCompatActivity implements View.OnClickListen
     private ArrayList<BookInfo> bookInfoArrayList;
     private EditText searchEdt;
     private ImageButton searchBtn;
+    private BottomNavigationView btmMenu;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,6 +50,7 @@ public class SearchBooks extends AppCompatActivity implements View.OnClickListen
         // initializing our views.
         searchEdt = findViewById(R.id.editTxtSearch);
         searchBtn = findViewById(R.id.imgSearch2);
+        btmMenu = findViewById(R.id.btmMenu);
 
         // initializing on click listener for our button.
         searchBtn.setOnClickListener(new View.OnClickListener() {
@@ -59,6 +66,25 @@ public class SearchBooks extends AppCompatActivity implements View.OnClickListen
                 // calling get book info method to load all
                 // the books from the API.
                 getBooksInfo(searchEdt.getText().toString());
+            }
+        });
+
+        btmMenu.setOnItemSelectedListener(new NavigationBarView.OnItemSelectedListener() {
+            @Override
+            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+                Intent i;
+                switch (item.getItemId()) {
+                    case R.id.ebk:
+                        i = new Intent(SearchBooks.this, EBook.class);
+                        startActivity(i);
+                        break;
+                    case R.id.home:
+                        i = new Intent(SearchBooks.this, HomeScreen.class);
+                        startActivity(i);
+                        break;
+                }
+
+                return true;
             }
         });
     }

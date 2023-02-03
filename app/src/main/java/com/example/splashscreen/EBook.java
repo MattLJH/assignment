@@ -4,6 +4,7 @@ import androidx.activity.result.ActivityResult;
 import androidx.activity.result.ActivityResultCallback;
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -13,8 +14,12 @@ import android.app.Activity;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
+
+import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.google.android.material.navigation.NavigationBarView;
 
 import java.io.InputStream;
 import java.util.ArrayList;
@@ -25,6 +30,7 @@ public class EBook extends AppCompatActivity {
     private ArrayList<EBookInfo> ebooks;
     private RecyclerView recyclerView;
     int userid;
+    private BottomNavigationView btmMenu;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,11 +39,30 @@ public class EBook extends AppCompatActivity {
 
         db = new DatabaseHandler(this);
         userid = getIntent().getIntExtra("Userid",0);
-
+        btmMenu = findViewById(R.id.btmMenu);
 
         ebooks = db.getAllEBooks(userid);
         recyclerView = findViewById(R.id.ebookList);
         setAdapter();
+
+        btmMenu.setOnItemSelectedListener(new NavigationBarView.OnItemSelectedListener() {
+            @Override
+            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+                Intent i;
+                switch (item.getItemId()) {
+                    case R.id.home:
+                        i = new Intent(EBook.this, HomeScreen.class);
+                        startActivity(i);
+                        break;
+                    case R.id.obk:
+                        i = new Intent(EBook.this, SearchBooks.class);
+                        startActivity(i);
+                        break;
+                }
+
+                return true;
+            }
+        });
 
 //        //test print items in db
 //        TextView tv5 = findViewById(R.id.textView5);
