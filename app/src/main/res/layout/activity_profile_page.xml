@@ -6,6 +6,18 @@
     android:layout_height="match_parent"
     tools:context=".ProfilePage">
 
+
+    <ImageView
+        android:id="@+id/profilepic"
+        android:layout_width="300dp"
+        android:layout_height="180dp"
+        android:layout_marginStart="86dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="87dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/UpdateName"
+        app:srcCompat="@drawable/profilepicture" />
     <EditText
         android:id="@+id/updatePass"
         android:layout_width="wrap_content"
@@ -13,13 +25,13 @@
         android:layout_marginBottom="3dp"
         android:ems="10"
         android:inputType="textPersonName"
-        app:layout_constraintBottom_toTopOf="@id/EmailLog"
+        app:layout_constraintBottom_toTopOf="@id/UpdateEmail"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.55"
         app:layout_constraintStart_toStartOf="parent"  />
 
     <EditText
-        android:id="@+id/EmailLog"
+        android:id="@+id/UpdateEmail"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="40dp"
@@ -66,7 +78,7 @@
         app:layout_constraintStart_toStartOf="parent"/>
 
     <EditText
-        android:id="@+id/NamePass"
+        android:id="@+id/UpdateName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="8dp"

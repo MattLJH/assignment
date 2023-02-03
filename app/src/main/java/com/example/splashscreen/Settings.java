@@ -16,10 +16,17 @@ public class Settings extends AppCompatActivity {
         setContentView(R.layout.activity_settings);
         Profile = (Button) findViewById(R.id.profilePage);
 
+
         Profile.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                startActivity(new Intent(Settings.this,ProfilePage.class));
+                Intent i;
+                String user;
+                user = getIntent().getStringExtra("Userid");
+                i = new Intent(Settings.this,ProfilePage.class);
+                i.putExtra("Userid",user);
+                startActivity(i);
+
             }
         });
     }
