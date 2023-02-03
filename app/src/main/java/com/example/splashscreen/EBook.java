@@ -38,19 +38,6 @@ public class EBook extends AppCompatActivity {
         ebooks = db.getAllEBooks(userid);
         recyclerView = findViewById(R.id.ebookList);
         setAdapter();
-
-//        //test print items in db
-//        TextView tv5 = findViewById(R.id.textView5);
-//
-//        if(ebooks.isEmpty()){
-//            tv5.setText("empty");
-//        }else {
-//            String a = "";
-//            for(EBookInfo ebook : ebooks){
-//                a+=ebook.getId()+"\n"+ebook.getTitle()+"\n"+ebook.getUri();
-//            }
-//            tv5.setText(a);
-//        }
     }
 
     ActivityResultLauncher<Intent> sActivityResultLauncher = registerForActivityResult(
