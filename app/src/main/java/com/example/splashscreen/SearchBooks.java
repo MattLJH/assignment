@@ -2,6 +2,7 @@ package com.example.splashscreen;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageButton;
@@ -109,7 +110,12 @@ public class SearchBooks extends AppCompatActivity implements View.OnClickListen
 
                         // below line is use to pass our
                         // array list in adapter class.
-                        BookAdapter adapter = new BookAdapter(bookInfoArrayList, SearchBooks.this);
+
+                        int User;
+                        User = getIntent().getIntExtra("Userid", 0);
+//                        Log.d("userid", User);
+
+                        BookAdapter adapter = new BookAdapter(bookInfoArrayList, SearchBooks.this, User);
 
                         // below line is use to add linear layout
                         // manager for our recycler view.
@@ -144,7 +150,11 @@ public class SearchBooks extends AppCompatActivity implements View.OnClickListen
         Intent x;
         switch (v.getId()) {
             case R.id.imgBkmark:
+                int User;
+                User = getIntent().getIntExtra("Userid", 0);
+                Log.d("userid", String.valueOf(User));
                 x = new Intent (this, BookmarkBooks.class);
+                x.putExtra("Userid", User);
                 startActivity(x);
                 break;
         }

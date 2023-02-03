@@ -20,9 +20,9 @@ public class HomeScreen extends AppCompatActivity implements View.OnClickListene
     @Override
     public void onClick(View v) {
         Intent i;
-        String User;
-        User = getIntent().getStringExtra("Userid");
-        Log.d("userid", User);
+        int User;
+        User = getIntent().getIntExtra("Userid", 0);
+        Log.d("userid", String.valueOf(User));
         switch (v.getId()) {
             case R.id.ebookList:
                 i = new Intent(this, EBook.class);

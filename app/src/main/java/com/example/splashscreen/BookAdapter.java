@@ -18,16 +18,21 @@ import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 
+import nl.siegmann.epublib.domain.Book;
+
 public class BookAdapter extends RecyclerView.Adapter<BookAdapter.BookViewHolder> {
 
     // creating variables for arraylist and context.
     private ArrayList<BookInfo> bookInfoArrayList;
     private Context mcontext;
+    private FavBookDatabaseHandler db;
+    private int Userid;
 
     // creating constructor for array list and context.
-    public BookAdapter(ArrayList<BookInfo> bookInfoArrayList, Context mcontext) {
+    public BookAdapter(ArrayList<BookInfo> bookInfoArrayList, Context mcontext, int Userid) {
         this.bookInfoArrayList = bookInfoArrayList;
         this.mcontext = mcontext;
+        this.Userid = new Intent(mcontext, HomeScreen.class).getIntExtra("Userid", Userid);
     }
 
     @NonNull
@@ -66,7 +71,6 @@ public class BookAdapter extends RecyclerView.Adapter<BookAdapter.BookViewHolder
                 i.putExtra("description", bookInfo.getDescription());
                 i.putExtra("thumbnail", bookInfo.getThumbnail());
 
-
                 // after passing that data we are
                 // starting our new intent.
                 mcontext.startActivity(i);
@@ -88,9 +92,10 @@ public class BookAdapter extends RecyclerView.Adapter<BookAdapter.BookViewHolder
         ImageView bookIV;
         ToggleButton BkmarkTG;
 
-
         public BookViewHolder(View itemView) {
             super(itemView);
+
+            db = new FavBookDatabaseHandler(mcontext);
             nameTV = itemView.findViewById(R.id.idRVBookTitle);
             publisherTV = itemView.findViewById(R.id.idRVAuthor);
             dateTV = itemView.findViewById(R.id.idRVDate);
@@ -101,9 +106,21 @@ public class BookAdapter extends RecyclerView.Adapter<BookAdapter.BookViewHolder
             BkmarkTG.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
+                    String title = nameTV.getText().toString();
+                    String publisher = publisherTV.getText().toString();
+                    String date = dateTV.getText().toString();
+                    String thumbnail = bookIV.toString();
+                    Log.d("Userid", String.valueOf(Userid));
+                    Log.d("Book", title);
                     if(BkmarkTG.isChecked()) {
+                        boolean isAdded = db.addBookmark(Userid, title, publisher, date, thumbnail, "description");
+                        if(!isAdded)
+                            Toast.makeText(mcontext, "Failed to add Book", Toast.LENGTH_SHORT);
                         Log.d("Added", "Success");
                     } else {
+                        boolean isDeleted = db.deleteBookmark(Userid, title, publisher, date, thumbnail, "description");
+                        if(!isDeleted)
+                            Toast.makeText(mcontext, "Failed to delete Book", Toast.LENGTH_SHORT);
                         Log.d("Delete", "Deleted");
                     };
                 }

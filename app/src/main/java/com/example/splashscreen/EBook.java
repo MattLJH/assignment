@@ -32,7 +32,7 @@ public class EBook extends AppCompatActivity {
         setContentView(R.layout.activity_ebook);
 
         db = new DatabaseHandler(this);
-        userid = Integer.parseInt(getIntent().getStringExtra("Userid"));
+        userid = getIntent().getIntExtra("Userid",0);
 
 
         ebooks = db.getAllEBooks(userid);
