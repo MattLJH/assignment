@@ -5,6 +5,9 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.util.Log;
+
+import java.util.ArrayList;
 
 public class FavBookDatabaseHandler extends SQLiteOpenHelper {
 
@@ -13,7 +16,11 @@ public class FavBookDatabaseHandler extends SQLiteOpenHelper {
     private static final String TABLE_BOOKMARKED = "Bookmark";
     private static final String KEY_ID = "bookmarkId";
     private static final String KEY_USERID = "userId";
-    private static final String KEY_BOOK = "book";
+    private static final String KEY_TITLE = "title";
+    private static final String KEY_PUBLISHER = "publisher";
+    private static final String KEY_DATE = "date";
+    private static final String KEY_IMAGE = "thumbnail";
+    private static final String KEY_DESCRIPTION = "description";
 
     public FavBookDatabaseHandler(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
@@ -23,7 +30,7 @@ public class FavBookDatabaseHandler extends SQLiteOpenHelper {
     // Creating Tables
     @Override
     public void onCreate(SQLiteDatabase db) {
-        String CREATE_BOOKMARK_TABLE = "CREATE TABLE " + TABLE_BOOKMARKED + "(" + KEY_ID + " INTEGER PRIMARY KEY," + KEY_USERID + " TEXT," + KEY_BOOK + " TEXT" + ")";
+        String CREATE_BOOKMARK_TABLE = "CREATE TABLE " + TABLE_BOOKMARKED + "(" + KEY_ID + " INTEGER PRIMARY KEY," + KEY_USERID + " TEXT," + KEY_TITLE + " TEXT,"  + KEY_PUBLISHER + " TEXT,"  + KEY_DATE + " TEXT,"  + KEY_IMAGE + " TEXT," + KEY_DESCRIPTION + " TEXT" + ")";
         db.execSQL(CREATE_BOOKMARK_TABLE);
     }
 
@@ -38,7 +45,6 @@ public class FavBookDatabaseHandler extends SQLiteOpenHelper {
     }
 
     boolean isBookBookmarkedByUser(int userId, String bookId){
-
         SQLiteDatabase db = this.getReadableDatabase();
         Cursor cursor = db.query(
                 "Bookmark",
@@ -49,32 +55,48 @@ public class FavBookDatabaseHandler extends SQLiteOpenHelper {
         return cursor.moveToFirst();
     }
 
-    /**
-     * Adds a bookmarked book into the database.
-     * @param userId - User ID of the user adding the recipe to favourites
-     * @param book - Recipe ID of the favourited recipe
-     * @return a boolean value
-     */
-    boolean addBookmark(int userId, String book) {
+    public ArrayList<BookInfo> getAllBookmarks(int userid) {
+        ArrayList<BookInfo> bookList = new ArrayList<BookInfo>();
+        String selectQuery = "SELECT * FROM " + TABLE_BOOKMARKED + " WHERE userid = " + userid;
+
+        SQLiteDatabase db = this.getWritableDatabase();
+        Cursor cursor = db.rawQuery(selectQuery, null);
+
+        if (cursor.moveToFirst()) {
+            do {
+                BookInfo bookinfo = new BookInfo();
+                bookinfo.setId(Integer.parseInt(cursor.getString(1)));
+                bookinfo.setTitle(cursor.getString(2));
+                bookinfo.setPublisher(cursor.getString(3));
+                bookinfo.setPublishedDate(cursor.getString(4));
+                bookinfo.setThumbnail(cursor.getString(5));
+                bookinfo.setDescription(cursor.getString(6));
+                bookList.add(bookinfo);
+            } while (cursor.moveToNext());
+        }
+
+        return bookList;
+    }
+
+    boolean addBookmark(int userid, String title, String publisher, String date, String thumbnail, String description) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues values = new ContentValues();
-        values.put("userId", userId);
-        values.put("bookId", book);
+        values.put("Userid", userid);
+        values.put("title", title);
+        values.put("publisher", publisher);
+        values.put("date", date);
+        values.put("thumbnail", thumbnail);
+        values.put("description", description);
+
         long result = db.insert("Bookmark", null, values);
 
         if (result == -1) return false;
         else return true;
     }
 
-    /**
-     * Deletes a bookmarked book from the database.
-     * @param userId - User ID of the user removing the recipe from favourites
-     * @param book - Recipe ID of the favourited recipe
-     * @return a boolean value
-     */
-    boolean deleteBookmark(int userId, String book) {
+    boolean deleteBookmark(int userid, String title, String publisher, String date, String thumbnail, String description) {
         SQLiteDatabase db = this.getWritableDatabase();
-        long result = db.delete("Bookmark", "userId=? AND recipeId = ?", new String[] { String.valueOf(userId), book});
+        long result = db.delete("Bookmark", "Userid = ? AND title = ? AND publisher = ? AND date = ? AND thumbnail = ? AND description = ?", new String[] { String.valueOf(userid), title, publisher, date, thumbnail, description});
 
         if (result == -1) return false;
         else return true;

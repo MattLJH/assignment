@@ -46,7 +46,7 @@ public class Login extends AppCompatActivity {
                     Log.d("UserID", String.valueOf(UserDb.getUser(UserName)));
                     Intent i;
                     i = new Intent(Login.this, HomeScreen.class);
-                    i.putExtra("Userid", String.valueOf(UserDb.getUser(UserName)));
+                    i.putExtra("Userid", UserDb.getUser(UserName));
                     startActivity(i);
                 } else {
                     Toast.makeText(Login.this, "Login fail", Toast.LENGTH_SHORT).show();
