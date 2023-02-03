@@ -44,12 +44,12 @@ public class FavBookDatabaseHandler extends SQLiteOpenHelper {
         onCreate(db);
     }
 
-    boolean isBookBookmarkedByUser(int userId, String bookId){
+    boolean isBookBookmarkedByUser(int userId, String title){
         SQLiteDatabase db = this.getReadableDatabase();
         Cursor cursor = db.query(
                 "Bookmark",
                 new String[] {"bookmarkId"},
-                "userId = ? AND book = ?", new String[] {String.valueOf(userId), bookId},
+                "userId = ? AND title = ?", new String[] {String.valueOf(userId), title},
                 null, null, null, null);
 
         return cursor.moveToFirst();
@@ -94,9 +94,9 @@ public class FavBookDatabaseHandler extends SQLiteOpenHelper {
         else return true;
     }
 
-    boolean deleteBookmark(int userid, String title, String publisher, String date, String thumbnail, String description) {
+    boolean deleteBookmark(int userid, String title) {
         SQLiteDatabase db = this.getWritableDatabase();
-        long result = db.delete("Bookmark", "Userid = ? AND title = ? AND publisher = ? AND date = ? AND thumbnail = ? AND description = ?", new String[] { String.valueOf(userid), title, publisher, date, thumbnail, description});
+        long result = db.delete("Bookmark", "Userid = ? AND title = ?", new String[] { String.valueOf(userid), title});
 
         if (result == -1) return false;
         else return true;

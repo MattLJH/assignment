@@ -152,7 +152,7 @@ public class SearchBooks extends AppCompatActivity implements View.OnClickListen
             case R.id.imgBkmark:
                 int User;
                 User = getIntent().getIntExtra("Userid", 0);
-                Log.d("userid", String.valueOf(User));
+                Log.d("Search userid", String.valueOf(User));
                 x = new Intent (this, BookmarkBooks.class);
                 x.putExtra("Userid", User);
                 startActivity(x);

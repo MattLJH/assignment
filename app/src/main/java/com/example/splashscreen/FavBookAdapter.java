@@ -30,7 +30,7 @@ public class FavBookAdapter extends RecyclerView.Adapter<FavBookAdapter.BookView
     public FavBookAdapter(ArrayList<BookInfo> bookInfoArrayList, Context mcontext, int Userid) {
         this.bookInfoArrayList = bookInfoArrayList;
         this.mcontext = mcontext;
-        this.Userid = new Intent(mcontext, HomeScreen.class).getIntExtra("Userid", Userid);
+        this.Userid = Userid;
     }
 
     @NonNull
@@ -115,8 +115,10 @@ public class FavBookAdapter extends RecyclerView.Adapter<FavBookAdapter.BookView
                     String publisher = publisherTV.getText().toString();
                     String date = dateTV.getText().toString();
                     String thumbnail = bookIV.toString();
-                    boolean isDeleted = db.deleteBookmark(Userid, title, publisher, date, thumbnail, "description");
+                    Log.d("FavBookAdapter Userid", String.valueOf(Userid));
+                    boolean isDeleted = db.deleteBookmark(Userid, title);
                     Log.d("Delete", "isDeleted: " + isDeleted);
+                    Log.d("Title", title);
                 }
             });
         }

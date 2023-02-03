@@ -24,10 +24,11 @@ public class BookmarkBooks extends AppCompatActivity implements View.OnClickList
         setContentView(R.layout.activity_bookmark_books);
         FavBookDatabaseHandler db = new FavBookDatabaseHandler(BookmarkBooks.this);
         User = getIntent().getIntExtra("Userid", 0);
-        Log.d("userid", String.valueOf(User));
+        Log.d("Bookmark userid", String.valueOf(User));
         bookInfoArrayList = db.getAllBookmarks(User);
         Log.d("Items", String.valueOf(bookInfoArrayList));
         setUIRef();
+
     }
 
     private void setUIRef() {
@@ -46,6 +47,8 @@ public class BookmarkBooks extends AppCompatActivity implements View.OnClickList
         switch (v.getId()) {
             case R.id.imgSearch3:
                 i = new Intent (this, SearchBooks.class);
+                Log.d("Bookmark 2 userid", String.valueOf(User));
+                i.putExtra("Userid", User);
                 startActivity(i);
                 break;
         }

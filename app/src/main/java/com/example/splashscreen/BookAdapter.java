@@ -32,7 +32,7 @@ public class BookAdapter extends RecyclerView.Adapter<BookAdapter.BookViewHolder
     public BookAdapter(ArrayList<BookInfo> bookInfoArrayList, Context mcontext, int Userid) {
         this.bookInfoArrayList = bookInfoArrayList;
         this.mcontext = mcontext;
-        this.Userid = new Intent(mcontext, HomeScreen.class).getIntExtra("Userid", Userid);
+        this.Userid = Userid;
     }
 
     @NonNull
@@ -53,6 +53,33 @@ public class BookAdapter extends RecyclerView.Adapter<BookAdapter.BookViewHolder
         holder.nameTV.setText(bookInfo.getTitle());
         holder.publisherTV.setText(bookInfo.getPublisher());
         holder.dateTV.setText(bookInfo.getPublishedDate());
+
+        boolean isBookmarked = db.isBookBookmarkedByUser(Userid, bookInfo.getTitle());
+        holder.BkmarkTG.setChecked(isBookmarked);
+
+        holder.BkmarkTG.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                String title = bookInfo.getTitle();
+                String publisher = bookInfo.getPublisher();
+                String date = bookInfo.getPublishedDate();
+                String thumbnail = bookInfo.getThumbnail();
+                String description = bookInfo.getDescription();
+                Log.d("BookAdapter Userid", String.valueOf(Userid));
+                Log.d("Book", title);
+                if(holder.BkmarkTG.isChecked()) {
+                    boolean isAdded = db.addBookmark(Userid, title, publisher, date, thumbnail, description);
+                    if(!isAdded)
+                        Toast.makeText(mcontext, "Failed to add Book", Toast.LENGTH_SHORT);
+                    Log.d("Added", "Success");
+                } else {
+                    boolean isDeleted = db.deleteBookmark(Userid, title);
+                    if(!isDeleted)
+                        Toast.makeText(mcontext, "Failed to delete Book", Toast.LENGTH_SHORT);
+                    Log.d("Delete", "Deleted");
+                };
+            }
+        });
 
         // below line is use to set image from URL in our image view.
         Picasso.get().load(bookInfo.getThumbnail().replace("http:", "https:")).into(holder.bookIV);
@@ -103,28 +130,28 @@ public class BookAdapter extends RecyclerView.Adapter<BookAdapter.BookViewHolder
 
             // Toggle Button
             BkmarkTG = itemView.findViewById(R.id.btnBookmark);
-            BkmarkTG.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    String title = nameTV.getText().toString();
-                    String publisher = publisherTV.getText().toString();
-                    String date = dateTV.getText().toString();
-                    String thumbnail = bookIV.toString();
-                    Log.d("Userid", String.valueOf(Userid));
-                    Log.d("Book", title);
-                    if(BkmarkTG.isChecked()) {
-                        boolean isAdded = db.addBookmark(Userid, title, publisher, date, thumbnail, "description");
-                        if(!isAdded)
-                            Toast.makeText(mcontext, "Failed to add Book", Toast.LENGTH_SHORT);
-                        Log.d("Added", "Success");
-                    } else {
-                        boolean isDeleted = db.deleteBookmark(Userid, title, publisher, date, thumbnail, "description");
-                        if(!isDeleted)
-                            Toast.makeText(mcontext, "Failed to delete Book", Toast.LENGTH_SHORT);
-                        Log.d("Delete", "Deleted");
-                    };
-                }
-            });
+//            BkmarkTG.setOnClickListener(new View.OnClickListener() {
+//                @Override
+//                public void onClick(View v) {
+//                    String title = nameTV.getText().toString();
+//                    String publisher = publisherTV.getText().toString();
+//                    String date = dateTV.getText().toString();
+//                    String description;
+//                    Log.d("BookAdapter Userid", String.valueOf(Userid));
+//                    Log.d("Book", title);
+//                    if(BkmarkTG.isChecked()) {
+//                        boolean isAdded = db.addBookmark(Userid, title, publisher, date, thumbnail, "description");
+//                        if(!isAdded)
+//                            Toast.makeText(mcontext, "Failed to add Book", Toast.LENGTH_SHORT);
+//                        Log.d("Added", "Success");
+//                    } else {
+//                        boolean isDeleted = db.deleteBookmark(Userid, title);
+//                        if(!isDeleted)
+//                            Toast.makeText(mcontext, "Failed to delete Book", Toast.LENGTH_SHORT);
+//                        Log.d("Delete", "Deleted");
+//                    };
+//                }
+//            });
         }
     }
 }
