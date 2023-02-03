@@ -55,7 +55,7 @@ public class UserInfos extends SQLiteOpenHelper {
         values.put(KEY_PASS, users.GetPass());
         values.put(KEY_Email, users.GetEmail());
         Log.d("The values are", values.toString());
-        Log.d("Table is ", TABLE_User);
+        Log.d("Table is ", users.GetID() + " " + users.GetName());
 
         // Inserting Row
         db.insert(TABLE_User , null, values);
@@ -109,7 +109,7 @@ public class UserInfos extends SQLiteOpenHelper {
         values.put(KEY_NAME, users.GetName());
         values.put(KEY_PASS, users.GetPass());
         values.put(KEY_Email, users.GetEmail());
-
+        Log.d(users.GetID() + users.GetName(),"userid");
         // updating row
         return db.update(TABLE_User, values, KEY_ID + " = ?",
                 new String[] { String.valueOf(users.GetID()) });
