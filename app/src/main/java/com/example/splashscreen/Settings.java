@@ -21,8 +21,8 @@ public class Settings extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Intent i;
-                String user;
-                user = getIntent().getStringExtra("Userid");
+                int user;
+                user = getIntent().getIntExtra("Userid",0);
                 i = new Intent(Settings.this,ProfilePage.class);
                 i.putExtra("Userid",user);
                 startActivity(i);

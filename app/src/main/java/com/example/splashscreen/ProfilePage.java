@@ -21,7 +21,7 @@ public class ProfilePage extends AppCompatActivity {
         PassUpdate = (EditText) findViewById(R.id.updatePass);
         EmailUpdate = (EditText) findViewById(R.id.UpdateEmail);
         UpdateButton = (Button)  findViewById(R.id.UpdateBut);
-        userID = Integer.parseInt(getIntent().getStringExtra("Userid"));
+        userID = getIntent().getIntExtra("Userid",0);
 
         UpdateButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -29,7 +29,7 @@ public class ProfilePage extends AppCompatActivity {
                 String name = (NameUpdate.getText().toString());
                 String Pass = (PassUpdate.getText().toString());
                 String Email = (EmailUpdate.getText().toString());
-                Users update = new Users (name, Pass, Email);
+                Users update = new Users (userID,name, Pass, Email);
                 db.updateUser(update);
                 Toast.makeText(ProfilePage.this,"User Updated",Toast.LENGTH_SHORT).show();
 
